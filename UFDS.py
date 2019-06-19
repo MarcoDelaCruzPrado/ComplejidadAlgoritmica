@@ -61,7 +61,7 @@ def quickUnionPonderado(G, a, b):
     fa = findPonderado(G, a)
     fb = findPonderado(G, b)
     if fa != fb:
-        if G[fa] < G[fb]:
+        if G[fa] <= G[fb]:
             G[fa] += G[fb]
             G[fb] = fa
         elif G[fb] < G[fa]:
