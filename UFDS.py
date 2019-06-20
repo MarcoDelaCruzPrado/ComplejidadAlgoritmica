@@ -70,22 +70,62 @@ def quickUnionPonderado(G, a, b):
     
 
 
-G = [-1 for x in range(10)]
-quickUnionPonderado(G,3,4)
-print(G)
-quickUnionPonderado(G,4,9)
-print(G)
-quickUnionPonderado(G,8,0)
-print(G)
-quickUnionPonderado(G,2,3)
-print(G)
-quickUnionPonderado(G,5,6)
-print(G)
-quickUnionPonderado(G,5,9)
-print(G)
-quickUnionPonderado(G,7,3)
-print(G)
-quickUnionPonderado(G,4,8)
-print(G)
-quickUnionPonderado(G,6,1)
-print(G)
+# G = [-1 for x in range(10)]
+# quickUnionPonderado(G,3,4)
+# print(G)
+# quickUnionPonderado(G,4,9)
+# print(G)
+# quickUnionPonderado(G,8,0)
+# print(G)
+# quickUnionPonderado(G,2,3)
+# print(G)
+# quickUnionPonderado(G,5,6)
+# print(G)
+# quickUnionPonderado(G,5,9)
+# print(G)
+# quickUnionPonderado(G,7,3)
+# print(G)
+# quickUnionPonderado(G,4,8)
+# print(G)
+# quickUnionPonderado(G,6,1)
+# print(G)
+
+G = ['a','b','c','d','e','f','g','h','i','j']
+n = len(G)
+P = [x for x in range(n)]
+
+def findFather(G, letter, P):
+    n = len(G)
+    for x in range(n):
+        if letter == G[x]:
+            if P[x] == x:
+                return x
+            else:
+                return findFather(G, G[P[x]], P)
+
+def UnionLetter(G, a, b, P):
+    n = len(G)
+    pa = findFather(G, a, P)
+    pb = findFather(G, b, P)
+    if pa != pb:
+        P[pa] = P[pb]
+
+
+print(P)
+UnionLetter(G, 'a', 'b', P)
+print(P)
+UnionLetter(G, 'b', 'd', P)
+print(P)
+UnionLetter(G, 'c', 'f', P)
+print(P)
+UnionLetter(G, 'c', 'i', P)
+print(P)
+UnionLetter(G, 'j', 'e', P)
+print(P)
+UnionLetter(G, 'g', 'j', P)
+print(P)
+
+
+        
+
+
