@@ -1,4 +1,4 @@
-import math
+import math 
 INF = math.inf
 
 def floydWarshal(G):
@@ -6,19 +6,20 @@ def floydWarshal(G):
     cost = [[INF for _ in range(n)] for _ in range(n)]
     path = [[-1 for _ in range(n)] for _ in range(n)]
     for u in range(n):
-        for v, w in G[u]:
-            cost[u][v] = w
+        for w, v in G[u]:
             path[u][v] = u
+            cost[u][v] = w
 
     for i in range(n):
         for u in range(n):
             for v in range(n):
-                if v == u or u == i or v == i: 
+                if i == u or u == v or i == v:
                     continue
                 f = cost[u][i] + cost[i][v]
                 if f < cost[u][v]:
-                    path[u][v] = i
                     cost[u][v] = f
+                    cost[u][v] = i
+    
     return path, cost
 
 G = []

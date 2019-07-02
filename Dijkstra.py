@@ -1,39 +1,41 @@
-import heapq as hq
 import math
+import heapq as hq
 INF = math.inf
 
-def dijstrak(G, a):
+def Dijkstra(G, s):
     n = len(G)
-    visited = [False]*n
-    path = [-1]*n
     cost = [INF]*n
+    path = [-1]*n
+    visited = [False]*n
+    cost[s] = 0
     q = []
-    cost[a] = 0
-    hq.heappush(q, (0,a))
+    hq.heappush(q, (0, s))
     while len(q) > 0:
-        g, u = hq.heappop(q)
+        _, u = hq.heappop(q)
         if not visited[u]:
             visited[u] = True
-            for v, w in G[u]:
+            for w, v in G[u]:
                 if not visited[v]:
-                    f = w + g
+                    f = cost[u] + w
                     if f < cost[v]:
-                        path[v] = u
                         cost[v] = f
-                        hq.heappush(q, (f,v))
-    
+                        path[v] = u
+                        hq.heappush(q, (f, v))
     return path, cost
 
+    
+P = [ 
+    [(5,1),(2,2),(6,4)] ,
+    [(5,0),(4,2),(7,3),(9,5),(6,6)], 
+    [(2,0),(4,1),(3,5),(6,6)],
+    [(7,1),(8,7)],
+    [(6,0),(9,6)],
+    [(9,1),(3,2),(1,6)],
+    [(6,1),(6,2),(9,4),(1,5)],
+    [(8,3)]
+]
 
-
-
-
-G = []
-with open('grafito-prim.in') as f:
-    for line in f:
-        u = len(G)
-        G.append([])
-        nums = [int(x) for x in line.split(' ')]
-        for i in range(len(nums)//2):
-            G[u].append((nums[i*2], nums[i*2+1]))
-print(dijstrak(G,0))
+path, cost = Dijkstra(P, 1)
+print(path)
+print("")
+print(cost)
