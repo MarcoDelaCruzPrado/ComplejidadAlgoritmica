@@ -28,6 +28,7 @@ def isSame(G, a, b):
         return False
 
 
+
 # Complejidad: El algoritmo de Quick Find puede tomar MxN(tiempo de algoritmo) pasos para procesar M comandos de union sobre N objetos
 def quickFind(G, a, b):
     fa = find(G, a)
@@ -69,61 +70,52 @@ def quickUnionPonderado(G, a, b):
             G[fa] = fb
     
 
+import math 
+INF = math.inf
 
-# G = [-1 for x in range(10)]
-# quickUnionPonderado(G,3,4)
-# print(G)
-# quickUnionPonderado(G,4,9)
-# print(G)
-# quickUnionPonderado(G,8,0)
-# print(G)
-# quickUnionPonderado(G,2,3)
-# print(G)
-# quickUnionPonderado(G,5,6)
-# print(G)
-# quickUnionPonderado(G,5,9)
-# print(G)
-# quickUnionPonderado(G,7,3)
-# print(G)
-# quickUnionPonderado(G,4,8)
-# print(G)
-# quickUnionPonderado(G,6,1)
-# print(G)
-
-G = ['a','b','c','d','e','f','g','h','i','j']
-n = len(G)
-P = [x for x in range(n)]
-
-def findFather(G, letter, P):
+def DefinirPuntoInicioYFin(G):
     n = len(G)
-    for x in range(n):
-        if letter == G[x]:
-            if P[x] == x:
-                return x
-            else:
-                return findFather(G, G[P[x]], P)
+    maxi = -1
+    pi = 0
+    pf = 0
+    for i in range(n):
+        for v, w in G[i]:
+            if w > maxi:
+                maxi = w
+                pi = i
+                pf = v
+    return pi, pf 
 
-def UnionLetter(G, a, b, P):
+def Union(G, a, b):
+    G[b] = a
+
+def CheckHaveMin(G, s, path):
+    mini = INF
+    posFinal = -1
+    for v, w in G[s]:
+        if w < mini and (find(path, s) != find(path, v)):            
+            mini = w
+            posFinal = v
+    if posFinal != -1:
+        Union(path, s, posFinal)
+    return posFinal
+    
+
+def UFDSModificado(G, s , e):
     n = len(G)
-    pa = findFather(G, a, P)
-    pb = findFather(G, b, P)
-    if pa != pb:
-        P[pa] = P[pb]
-
-
-print(P)
-UnionLetter(G, 'a', 'b', P)
-print(P)
-UnionLetter(G, 'b', 'd', P)
-print(P)
-UnionLetter(G, 'c', 'f', P)
-print(P)
-UnionLetter(G, 'c', 'i', P)
-print(P)
-UnionLetter(G, 'j', 'e', P)
-print(P)
-UnionLetter(G, 'g', 'j', P)
-print(P)
+    path = [x for x in range(n)]
+    order = []
+    pos = s
+    order.append(pos)
+    for _ in range(n):
+        pos = CheckHaveMin(G, pos, path)
+        order.append(pos)
+    if pos == e:
+        return None
+    else:
+        order.append(s)
+        return order 
+    
 
 
         

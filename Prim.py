@@ -5,31 +5,41 @@ INF = math.inf
 def prim(G):
     n = len(G)
     visited = [False]*n
-    path = [-1]*n
     cost = [INF]*n
-    queue = []
-    s = 0
-    cost[s] = 0
-    hq.heappush(queue,(0,s))
-    while len(queue) > 0:
-        _, u = hq.heappop(queue)
+    path = [-1]*n
+    order = []
+    q = []
+    a = 0
+    hq.heappush(q, (0, a))
+    order.append(a)
+    cost[a] = 0
+    while len(q) > 0:
+        _, u = hq.heappop(q)
         if not visited[u]:
             visited[u] = True
-            for v, w in G[u]:
-                if not visited[v] and w < cost[v]:
+            for w, v in G[u]:
+                if w < cost[v] and not visited[v]:
                     path[v] = u
-                    cost[v] = w
-                    hq.heappush(queue, (w, v))
+                    cost[v] = w                   
+                    order.append(v)
+                    hq.heappush(q, (w, v))
+    
+    return order, path, cost
 
-    return path, cost
+G = [ 
+    [(5,1),(2,2),(6,4)] ,
+    [(5,0),(4,2),(7,3),(9,5),(6,6)], 
+    [(2,0),(4,1),(3,5),(6,6)],
+    [(7,1),(8,7)],
+    [(6,0),(9,6)],
+    [(9,1),(3,2),(1,6)],
+    [(6,1),(6,2),(9,4),(1,5)],
+    [(8,3)]
+]
 
-G = []
-with open('grafito-prim.in') as f:
-    for line in f:
-        u = len(G)
-        G.append([])
-        nums = [int(x) for x in line.split(' ')]
-        for i in range(len(nums) // 2):
-            G[u].append((nums[i * 2], nums[i * 2 + 1]))
-
-print(G)
+o, p, c = prim(G)
+print(o)
+print("")
+print(p)
+print("")
+print(c)
