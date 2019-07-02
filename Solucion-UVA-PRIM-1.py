@@ -3,37 +3,6 @@ import math
 import heapq as hq
 INF = math.inf
 
-#region prim
-# def prim(G):
-#     n = len(G)
-#     visited = [False]*n
-#     path = [-1]*n
-#     cost = [INF]*n
-#     q = []
-#     s = 0
-#     cost[s] = 0
-#     hq.heappush(q, (0,s))
-#     while len(q) > 0:
-#         _, u = hq.heappop(q)
-#         if not visited[u]:
-#             visited[u] = True
-#             for v, w in G[u]:
-#                 if not visited[v] and w > cost[v]:
-#                     cost[v] = w
-#                     path[v] = u
-#                     hq.heappush(q, (w, v))  
-
-#     suma = 0
-#     for x in cost:
-#         if x == INF:
-#             print("¡De ninguna manera!")
-#             return
-#         else:
-#             suma += x
-#     print(str(suma))
-#     return
-#endregion
-
 def find(G, a):
     if G[a] < 0:
         return a
